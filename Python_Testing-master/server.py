@@ -26,8 +26,13 @@ def index():
 
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',club=club,competitions=competitions)
+    email = request.form['email']
+    filtered_clubs = [club for club in clubs if club['email'] == email]
+    if filtered_clubs:
+        club = filtered_clubs[0]
+        return render_template('welcome.html', club=club, competitions=competitions)
+    else:
+        return render_template('index.html', error_message=f"L'email {email} n'est pas enregistré sur le site.")
 
 
 @app.route('/book/<competition>/<club>')
