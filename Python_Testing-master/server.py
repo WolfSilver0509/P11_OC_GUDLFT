@@ -53,9 +53,12 @@ def purchasePlaces():
     placesRequired = int(request.form['places'])
 
     if placesRequired <= int(club['points']):
-        competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
-        club['points'] = str(int(club['points']) - placesRequired)
-        flash('Super votre réservation est bien prise en compte / Great-booking complete!')
+        if placesRequired <= 12:
+            competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
+            club['points'] = str(int(club['points']) - placesRequired)
+            flash('Super votre réservation est bien prise en compte / Great-booking complete!')
+        else:
+            flash('Vous ne pouvez pas réserver plus de 12 places / You cannot book more than 12 places.')
     else:
         flash("Pas assez de points disponibles pour ce club. / Not enough points available for this club.")
 
