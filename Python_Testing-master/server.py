@@ -56,21 +56,33 @@ def book(competition,club):
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
-def updateClubs(file_path='clubs.json'):
+def updateClubs(current_club,file_path='clubs.json'):
     with open(file_path, 'r') as c:
         clubs = json.load(c)
-
-    updated_clubs = [{'name': club['name'], 'email': club['email'], 'points': int(club['points'])} for club in clubs['clubs']]
+    updated_clubs = []
+    for club in clubs['clubs']:
+        if club['name'] == current_club['name']:
+            club['points'] = int(current_club['points'])
+        else:
+            club['points'] = int(club['points'])
+        updated_clubs.append(club)
+    # updated_clubs = [{'name': club['name'], 'email': club['email'], 'points': int(club['points'])} for club in clubs['clubs']]
 
     with open(file_path, 'w') as c:
         json.dump({'clubs': updated_clubs}, c, indent=4)
 
-def updateCompetitions(file_path='competitions.json'):
+def updateCompetitions(current_competition, file_path='competitions.json'):
     with open(file_path, 'r') as c:
         competitions = json.load(c)
+    updated_competitions = []
+    for competition in competitions['competitions']:
+        if competition['name'] == current_competition['name']:
+            competition['numberOfPlaces'] = int(current_competition['numberOfPlaces'])
+        else:
+            competition['numberOfPlaces'] = int(competition['numberOfPlaces'])
+        updated_competitions.append(competition)
 
-    updated_competitions = [{'name': competition['name'], 'date': competition['date'], 'numberOfPlaces': int(competition['numberOfPlaces'])} for competition in competitions['competitions']]
-
+    # updated_competitions = [{'name': competition['name'], 'date': competition['date'], 'numberOfPlaces': int(competition['numberOfPlaces'])} for competition in competitions['competitions']]
     with open(file_path, 'w') as c:
         json.dump({'competitions': updated_competitions}, c, indent=4)
 
@@ -86,8 +98,8 @@ def purchasePlaces():
             competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
             club['points'] = str(int(club['points']) - placesRequired)
             flash('Super votre réservation est bien prise en compte / Great-booking complete!')
-            updateClubs()
-            updateCompetitions()
+            updateClubs(club)
+            updateCompetitions(competition)
         else:
             flash('Vous ne pouvez pas réserver plus de 12 places / You cannot book more than 12 places.')
     else:
