@@ -1,6 +1,8 @@
 from server import app
 import html
 import json
+from server import updateClubs, updateCompetitions
+from unittest.mock import mock_open, patch
 from .conftest import client, mock_competitions, mock_clubs
 
 
