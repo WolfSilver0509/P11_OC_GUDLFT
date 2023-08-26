@@ -1,6 +1,7 @@
 from server import app
 import html
 import json
+import pytest
 from server import updateClubs, updateCompetitions
 from unittest.mock import mock_open, patch
 from .conftest import client, mock_competitions, mock_clubs
@@ -120,5 +121,4 @@ def test_book_future_competition(mock_clubs, mock_competitions):
             # Vérifie que la redirection s'est produite
             assert response.status_code == 200
             assert "Great-booking complete!"
-
 
