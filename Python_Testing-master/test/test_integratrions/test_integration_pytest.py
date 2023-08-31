@@ -6,7 +6,7 @@ from server import updateClubs, updateCompetitions
 from unittest.mock import mock_open, patch
 from test.conftest import client, mock_competitions, mock_clubs
 
-def test_user_path_valid(monkeypatch):
+def test_user_path_valid(monkeypatch,mock_competitions, mock_clubs ):
     """ Parcour d'un user valide avec uen réservation de places """
     # Définir les données simulées pour la requête
     email = 'kate@shelifts.co.uk'
@@ -29,14 +29,14 @@ def test_user_path_valid(monkeypatch):
         competitions_data = json.load(competitions_file)
 
     # Simuler une requête POST avec suffisamment de points disponibles
-    response = client.post('/purchasePlaces', data={'competition': 'Fall Classic', 'club': 'Simply Lift', 'places': '3'})
+    response = client.post('/purchasePlaces', data={'competition': 'HollyDays', 'club': 'Club_2', 'places': '3'})
 
     # Vérifier la réponse
     assert response.status_code == 200
     assert "Great-booking complete!" in response.data.decode('utf-8')
 
 
-def test_user_path_point_not_available():
+def test_user_path_point_not_available(mock_competitions, mock_clubs):
     """ Parcours d'un user avec pas assez de points """
     # Définir les données simulées pour la requête
     email = 'kate@shelifts.co.uk'
@@ -59,7 +59,7 @@ def test_user_path_point_not_available():
         competitions_data = json.load(competitions_file)
 
     # Simuler une requête POST avec un nombre de points supérieur à ceux disponibles
-    response = client.post('/purchasePlaces', data={'competition': 'Fall Classic', 'club': 'Iron Temple', 'places': '5'})
+    response = client.post('/purchasePlaces', data={'competition': 'HollyDays', 'club': 'Club_1', 'places': '5'})
 
     # Vérifier la réponse
     assert response.status_code == 200
