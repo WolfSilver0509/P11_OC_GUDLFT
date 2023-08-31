@@ -1,7 +1,7 @@
 from server import app
 import html
 import json
-from .conftest import client, mock_competitions, mock_clubs
+from test.conftest import client, mock_competitions, mock_clubs
 
 def test_book_past_competition(mock_competitions, mock_clubs):
     with app.test_request_context():

@@ -4,7 +4,7 @@ import json
 import pytest
 from server import updateClubs, updateCompetitions
 from unittest.mock import mock_open, patch
-from .conftest import client, mock_competitions, mock_clubs
+from test.conftest import client, mock_competitions, mock_clubs
 
 def test_user_path_valid(monkeypatch):
     """ Parcour d'un user valide avec uen réservation de places """

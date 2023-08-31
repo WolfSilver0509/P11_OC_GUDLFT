@@ -53,7 +53,7 @@ def book(competition,club):
     else:
         flash("Une erreur s'est produite. Veuillez réessayer / Something went wrong - please try again")
 
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=foundClub, competitions=competitions)
 
 
 def updateClubs(current_club,file_path='clubs.json'):

@@ -1,7 +1,7 @@
 from server import app
 import html
 import json
-from .conftest import client, mock_competitions, mock_clubs
+from test.conftest import client, mock_competitions, mock_clubs
 
 def test_purchase_places_exceed_max_limit(client , mock_competitions, mock_clubs):
     # charger des données de test pour la compétition et le club pour tester la réservation de places
